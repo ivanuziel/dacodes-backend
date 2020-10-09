@@ -9,19 +9,25 @@
 | darkaonline/l5-swagger | https://github.com/DarkaOnLine/L5-Swagger |
 
 ## Instalación del sistema
-- Configuración de la base de datos en el `.env`
-- Configuración de variable `L5_SWAGGER_BASE_PATH` con el dominio utilizado para el sistema
-- Ejecutar comando `composer install` en la terminal
-- Ejecutar comando `php artisan migrate` en la terminal
-- Ejecutar comando `php artisan passport:install` en la terminal
-- Ejecutar comando `php artisan db:seed` en la terminal para los datos de prueba
+- Renombrar el archivo `.env.example` a `.env` 
+- Configuración de la base de datos en el archivo `.env`. (creado con mysql)
+- Configuración de variable `L5_SWAGGER_BASE_PATH` en el archivo `.env` con el dominio utilizado para el sistema
+- Ejecutar los siguientes comandos en la terminal situándote dentro la carpeta del proyecto:
+
+```sh
+$ composer install
+$ php artisan key:generate
+$ php artisan migrate
+$ php artisan passport:install
+$ php artisan db:seed
+```
 
 ## Enpoints
 Los endpoints están registrados en el swagger (`/api/documentation`).
 
 ## Notas del proyecto
 
-Accesos para probar API del profesor:
+Accesos para probar API profesor y alumno:
 | Username | Password |
 | ------ | ------ |
 | professor@mail.com | 1234567890 |
