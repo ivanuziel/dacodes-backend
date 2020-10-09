@@ -39,6 +39,10 @@ class Item extends Model
         'data' => 'object'
     ];
 
+    public function setDataAttribute($value) {
+        $this->attributes['data'] = json_encode(json_decode(trim($value)));
+    }
+
     /*
      * ---------------
      * Relationships

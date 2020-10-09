@@ -12,43 +12,43 @@ $factory->define(Item::class, function (Faker $faker) {
 	if($type == 1){
 		$data = [
 			'type' => 'boolean',
-			'answer-type' => 'single',
+			'answer_type' => 'single',
 			'answer' => $faker->boolean
 		];
 	} else if($type == 2){
 		$data = [
 			'type' => 'multiple',
-			'answer-type' => 'single',
+			'answer_type' => 'single',
 			'answer' => rand(0,3),
 			'options' => [
-				'Opción 1',
-				'Opción 2',
-				'Opción 3',
-				'Opción 4',
+				'Option 1',
+				'Option 2',
+				'Option 3',
+				'Option 4',
 			]
 		];
 	} else if($type == 3){
 		$data = [
 			'type' => 'multiple',
-			'answer-type' => 'multiple',
+			'answer_type' => 'multiple',
 			'answer' => [rand(0,3), rand(0,3)],
 			'options' => [
-				'Opción 1',
-				'Opción 2',
-				'Opción 3',
-				'Opción 4',
+				'Option 1',
+				'Option 2',
+				'Option 3',
+				'Option 4',
 			]
 		];
 	} else if($type == 4){
 		$data = [
 			'type' => 'multiple',
-			'answer-type' => 'all',
+			'answer_type' => 'all',
 			'answer' => [rand(0,3), rand(0,3)],
 			'options' => [
-				'Opción 1',
-				'Opción 2',
-				'Opción 3',
-				'Opción 4',
+				'Option 1',
+				'Option 2',
+				'Option 3',
+				'Option 4',
 			]
 		];
 	}

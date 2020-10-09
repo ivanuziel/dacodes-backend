@@ -10,13 +10,209 @@
         }
     ],
     "paths": {
-        "/api/courses": {
-            "get": {
-                "summary": "Listar todos los cursos disponibles para el estudiante",
-                "operationId": "App\\Http\\Controllers\\APIController::courses",
+        "/api/enrollments": {
+            "post": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Registar inscripción de alumno al curso",
+                "description": "Registar inscripción de alumno al curso",
+                "operationId": "get_enrollments",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "course_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Collección de cursos"
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/courses": {
+            "get": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Listar cursos",
+                "description": "Lista de cursos disponible para el alumno con indicador si está inscrito o no",
+                "operationId": "get_courses",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/courses/{course}": {
+            "get": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Obtener detalle de un curso inscrito",
+                "description": "Obtener detalle de un curso previamente inscrito, con indicador de aprobación por curso y lección",
+                "operationId": "show_course",
+                "parameters": [
+                    {
+                        "name": "course",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/courses/{course}/lessons/{lesson}": {
+            "get": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Obtener detalle de una lección inscrita",
+                "description": "Obtener detalle de una lección previamente inscrito",
+                "operationId": "show_lesson",
+                "parameters": [
+                    {
+                        "name": "course",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "lesson",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Enviar las respuestas a cada pregunta de la lección",
+                "description": "Enviar las respuestas a cada pregunta de la lección",
+                "operationId": "save_answers",
+                "parameters": [
+                    {
+                        "name": "course",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "lesson",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "explode": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "answers",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "answers": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    },
+                                    "example": [
+                                        {
+                                            "question_id": "answer_value"
+                                        },
+                                        {
+                                            "question_id": {
+                                                "": [
+                                                    "answer_value",
+                                                    "answer_value"
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation, {approval}",
+                        "content": {
+                            "application/json": {}
+                        }
                     }
                 },
                 "security": [
@@ -369,6 +565,15 @@
                         }
                     },
                     {
+                        "name": "approval_min",
+                        "in": "query",
+                        "description": "Puntos mínimos para aprobar la lección",
+                        "required": false,
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    {
                         "name": "course_id",
                         "in": "query",
                         "required": true,
@@ -457,6 +662,15 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "approval_min",
+                        "in": "query",
+                        "description": "Puntos mínimos para aprobar la lección",
+                        "required": false,
+                        "schema": {
+                            "type": "int"
+                        }
                     }
                 ],
                 "responses": {
@@ -527,6 +741,116 @@
                         "passport": []
                     }
                 ]
+            },
+            "post": {
+                "tags": [
+                    "Admin Questions"
+                ],
+                "summary": "Alta de una pregunta",
+                "description": "Guardar una pregunta",
+                "operationId": "save_admin_question",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Puntos al responder correctamente",
+                        "required": false,
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    {
+                        "name": "lesson_id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "data",
+                        "in": "query",
+                        "description": "Json con las opciones de la pregunta (type: multiple,boolean, answer: clave o valor)",
+                        "required": true,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "multiple",
+                                                "boolean"
+                                            ]
+                                        },
+                                        "answer_type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "single",
+                                                "multiple",
+                                                "all"
+                                            ]
+                                        },
+                                        "answer": {
+                                            "type": "string",
+                                            "example": 0
+                                        },
+                                        "options": {
+                                            "type": "string",
+                                            "example": [
+                                                "opcion1",
+                                                "opcion2",
+                                                "opcion3"
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "question",
+                                "supplement"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
             }
         },
         "/api/admin/questions/{id}": {
@@ -541,10 +865,101 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID",
+                        "description": "question",
                         "required": true,
                         "schema": {
                             "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Admin Questions"
+                ],
+                "summary": "Actualizar una pregunta",
+                "description": "Actualizar una pregunta",
+                "operationId": "update_admin_question",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "question",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Puntos al responder correctamente",
+                        "required": false,
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    {
+                        "name": "data",
+                        "in": "query",
+                        "description": "Json con las opciones de la pregunta (type: multiple,boolean, answer: clave o valor)",
+                        "required": true,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "boolean",
+                                                "multiple"
+                                            ]
+                                        },
+                                        "answer_type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "single",
+                                                "multiple",
+                                                "all"
+                                            ]
+                                        },
+                                        "answer": {
+                                            "type": "string",
+                                            "example": false
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
                         }
                     }
                 ],

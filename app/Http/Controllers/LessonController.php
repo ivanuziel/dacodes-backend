@@ -60,6 +60,15 @@ class LessonController extends Controller
      *          )
      *      ),
      *      @OA\Parameter(
+     *          name="approval_min",
+     *          in="query",
+     *          required=false,
+     *          description="Puntos mínimos para aprobar la lección",
+     *          @OA\Schema(
+     *            type="int"
+     *          )
+     *      ),
+     *      @OA\Parameter(
      *          name="course_id",
      *          in="query",
      *          required=true,
@@ -161,6 +170,15 @@ class LessonController extends Controller
      *          required=false,
      *          @OA\Schema(
      *            type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="approval_min",
+     *          in="query",
+     *          required=false,
+     *          description="Puntos mínimos para aprobar la lección",
+     *          @OA\Schema(
+     *            type="int"
      *          )
      *      ),
      *      @OA\Response(

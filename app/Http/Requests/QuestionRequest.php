@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Item;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,7 +26,10 @@ class QuestionRequest extends FormRequest
     public function rules()
     {
         return [
-            'lesson_id' => [ 'required', Rule::exists('lessons','id') ],
+            'lesson_id' => [
+                $this->route()->question ? 'nullable' : 'required',
+                Rule::exists('lessons','id'),
+            ],
             'title' => [ 'required', 'string' ],
             'description' => ['nullable'],
             'order' => ['nullable', 'integer'],
